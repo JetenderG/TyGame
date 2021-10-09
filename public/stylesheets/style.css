@@ -23,4 +23,9 @@ button{
 .container{
   display: flex;
   height: 80%;
+  flex-direction: column
+}
+
+.sentence-container,.letters-container{
+  height: 50%;
 }
