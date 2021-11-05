@@ -5,7 +5,7 @@ const lettersPressed = document.querySelectorAll('key');
 const generateText = document.querySelector('.generateText');
 const typingContainer = document.querySelector(".typing-container");
 const btnGenerate = document.querySelector('.generateText');
-const userTyped = document.querySelector(".user-text");
+const userTyped = document.getElementsByClassName("user-text")[0];
 
 //This is where we populate the page with letters and symbols respresenting the keys from the array from which represents the keyboard
 
@@ -32,7 +32,6 @@ let checkTyping = (text, word) => {
 
 let revealIssue = (arg) =>{
     console.log("Invoked the realIssue function")
-    userTyped.innerHTML = ""
     arg.forEach(element => {
         userTyped.append(element)
     });
@@ -48,7 +47,7 @@ let attemptOne = (typed, word) => {
          return replaceCharacter(data, typed)  
         })
         .then(data => {
-          revealIssue(data)
+       //     revealIssue(data)
         })
     }
 
@@ -89,7 +88,7 @@ let replaceCharacter = (arg, typed) =>{
         let newCharacter =   document.createElement("span");
             newCharacter.textContent = char.letter;
             console.log(char.index)
-            
+            Array
             reConstructive[char.index] = newCharacter
 
                    

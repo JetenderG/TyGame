@@ -1,0 +1,65 @@
+*{
+margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+font-size: 16px;
+}
+
+a {
+  color: #00B7FF;
+}
+html,body{
+  
+  height: 100%;
+  width: 100%;
+}
+
+
+.generateText,.key{
+  margin: 15px;
+  color: black;
+  height: 2rem;
+  width: 4rem;
+  position: relative;
+  display: inline-block;
+}
+.button_active{
+  height: 2.2rem;
+  width: 4.2rem;
+}
+.container{
+  display: grid;
+  height: 80%;
+  grid-template-rows: 4fr 1fr 1fr;
+  grid-template-areas: 
+  "Sentence"
+  "Typed"
+  "Button";
+}
+
+.sentence-container{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+
+}
+.paragraph-data{
+  grid-area: "Sentence";
+
+}
+.typing-container{
+  grid-area: "Typed";
+}
+
+.container-generate-text{
+  grid-area: "Button";
+}
+
+.paragraph-data, .typing-container{
+  font-size: 43px;
+  text-align: center;
+}
+
+.key{
+  box-shadow: inset 0px 1px 20px 2px rgb(0 0 0);
+  border: solid 1px;
+}
