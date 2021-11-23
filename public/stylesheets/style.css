@@ -40,10 +40,10 @@ html,body{
 .sentence-container{
   display: grid;
   grid-template-rows: 1fr 1fr;
+  grid-area: "Sentence";
 
 }
 .paragraph-data{
-  grid-area: "Sentence";
 
 }
 .typing-container{
@@ -62,4 +62,14 @@ html,body{
 .key{
   box-shadow: inset 0px 1px 20px 2px rgb(0 0 0);
   border: solid 1px;
+}
+.errorCharacter{
+  text-decoration: underline;
+  text-decoration-color: red;
+  color: red;
+}
+.timerContainer{
+  position: relative;
+  z-index: -1;
+  float: right;
 }
