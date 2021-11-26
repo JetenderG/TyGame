@@ -13,7 +13,10 @@ html,body{
   height: 100%;
   width: 100%;
 }
-
+.title{
+  font-size: 110px; 
+  text-align: center;
+}
 
 .generateText,.key{
   margin: 15px;
@@ -69,7 +72,7 @@ html,body{
   color: red;
 }
 .timerContainer{
-  position: relative;
+  position: absolute;
   z-index: -1;
-  float: right;
+  right: 10px;
 }

@@ -23,32 +23,58 @@ let timer = () =>{
    // millseconds variable as well
     let oldestDate  = Date.now() // gives us millseconds
     let secondsDuration = Math.floor(oldestDate / 1000); 
-    let secs = 0; 
-    let mins = 0;
+   // let secs = 0; 
+    //let mins = 0;
     const interval = 1000
-    setInterval(() => {
-        let present = Math.floor(Date.now() - oldestDate)
-        console.log(present)
-        if (present >= 1000){
-            console.log("hefsfesf")
-            secs++;
-            milElement.innerHTML = String(present).slice(0,1)
-           // secs <= 9 ?  `"0${secs}` : secs;
-            secElement.innerHTML =  secs <= 9 ?  `0${secs}` : secs;
-            if (secs === 60){
-                secs = 0;
-                mins++
-            minElement.innerHTML = mins <= 9 ?  `0${mins}` : mins;
-            }
-        }
+    // setInterval(() => {
+    //     let present = Math.floor(Date.now() - oldestDate)
+     
+    //     if (present >= 1000){
+    //         console.log("hefsfesf")
+    //         secs++;
+    //         milElement.innerHTML = String(present).slice(0,1)
+    //        // secs <= 9 ?  `"0${secs}` : secs;
+    //         secElement.innerHTML =  secs <= 9 ?  `0${secs}` : secs;
+    //         if (secs === 60){
+    //             secs = 0;
+    //             mins++
+    //         minElement.innerHTML = mins <= 9 ?  `0${mins}` : mins;
+    //         }
+    //     }
 
       
 
-        oldestDate = oldestDate + interval  
+    //   oldestDate = oldestDate + 1000  
         
-    //    secElement.innerHTML = secs;
-         console.log(secs)
-    }, interval);
+    // //    secElement.innerHTML = secs;
+    //      console.log(present)
+    // }, 10);
+    let timeA, timeB, timeC,secs,mins,mill;
+    timeA = timeB = timeC = Date.now();  
+  
+    setInterval(() => {
+        if (Math.floor((Date.now() -timeA)) >= 1000){
+            if (Math.floor((Date.now() - timeB)/ 1000) > 59){
+                timeA = timeB = Date.now();
+                console.log("this is the double ifs")
+            }else{
+                timeA = Date.now();
+
+                console.log("this is the single ifs")
+            }
+            
+        }
+        console.log(Math.floor((Date.now() -timeA)) , "milleseconds")
+        console.log(Math.floor((Date.now() -timeA ) / 1000), "seconds")
+        console.log(Math.floor((Date.now() -timeB)/ 1000 / 60), "min")
+            mill =  String(Math.floor((Date.now() -timeA))).slice(0,2)
+         secs = Math.floor((Date.now() -timeB ) / 1000); 
+         mins = Math.floor((Date.now() -timeC)/ 1000 / 60); 
+                milElement.innerHTML = mill
+             secElement.innerHTML =  secs <= 9 ?  `0${secs}` : secs;
+              minElement.innerHTML = mins <= 9 ?  `0${mins}` : mins;
+
+    }, 10);
 }
 
 let revealIssue = (arg) => {
