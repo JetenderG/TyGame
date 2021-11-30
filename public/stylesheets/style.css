@@ -2,7 +2,7 @@
 margin: 0;
   padding: 0;
   box-sizing: border-box;
-font-size: 16px;
+  font-size:62.5%;
 }
 
 a {
@@ -14,17 +14,17 @@ html,body{
   width: 100%;
 }
 .title{
-  font-size: 110px; 
+  font-size: 5vw; 
   text-align: center;
 }
 
 .generateText,.key{
-  margin: 15px;
+  margin: 1vw;
   color: black;
-  height: 2rem;
-  width: 4rem;
+  height: 4vh;
+  width: 7vh;
   position: relative;
-  display: inline-block;
+  display: inline-block
 }
 .button_active{
   height: 2.2rem;
@@ -32,20 +32,39 @@ html,body{
 }
 .container{
   display: grid;
-  height: 80%;
+  height: 84%;
   grid-template-rows: 4fr 1fr 1fr;
   grid-template-areas: 
   "Sentence"
   "Typed"
   "Button";
+  width: 100vw;
+
 }
 
+.letters-container{
+  width: 50%;
+  text-align: center;
+  margin: auto;
+}
 .sentence-container{
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-area: "Sentence";
 
 }
+.generatedWord{
+  font-size: 34px;
+  text-align: center;
+  /* line-height: 29rem; */
+  height: 0px;
+  position: relative;
+  /* position: absolute; */
+  left: 0px;
+  bottom: -169px;
+
+}
+
 .paragraph-data{
 
 }
@@ -63,8 +82,10 @@ html,body{
 }
 
 .key{
-  box-shadow: inset 0px 1px 20px 2px rgb(0 0 0);
-  border: solid 1px;
+  box-shadow: inset 0px 1px 20px 2px rgb(246 246 249);
+  /* border: solid 1px; */
+  border-radius: 10px;
+  font-size: 1.8vh;
 }
 .errorCharacter{
   text-decoration: underline;
@@ -75,4 +96,10 @@ html,body{
   position: absolute;
   z-index: -1;
   right: 10px;
+}
+.user-text{
+  position: relative;
+  left: 0;
+  top: 6rem;
+
 }

@@ -9,6 +9,9 @@ const userTyped = document.querySelector(".user-text");
 const minElement = document.getElementById("min");
 const secElement = document.getElementById("sec");
 const milElement = document.getElementById("mil");
+const generatedWord = document.querySelector(".generatedWord");
+
+
 //This is where we populate the page with letters and symbols respresenting the keys from the array from which represents the keyboard
 
 let timerState = true;
@@ -19,64 +22,37 @@ let outcome = (toCheck) =>{
     console.log(document.querySelectorAll(".errorCharacter").length)
 }
 
+////////////////////////////////////////////
+
+let timeA, timeB, timeC,secs,mins,mill;
+timeA = timeB = timeC = Date.now();   
 let timer = () =>{
-   // millseconds variable as well
-    let oldestDate  = Date.now() // gives us millseconds
-    let secondsDuration = Math.floor(oldestDate / 1000); 
-   // let secs = 0; 
-    //let mins = 0;
-    const interval = 1000
-    // setInterval(() => {
-    //     let present = Math.floor(Date.now() - oldestDate)
-     
-    //     if (present >= 1000){
-    //         console.log("hefsfesf")
-    //         secs++;
-    //         milElement.innerHTML = String(present).slice(0,1)
-    //        // secs <= 9 ?  `"0${secs}` : secs;
-    //         secElement.innerHTML =  secs <= 9 ?  `0${secs}` : secs;
-    //         if (secs === 60){
-    //             secs = 0;
-    //             mins++
-    //         minElement.innerHTML = mins <= 9 ?  `0${mins}` : mins;
-    //         }
-    //     }
-
-      
-
-    //   oldestDate = oldestDate + 1000  
-        
-    // //    secElement.innerHTML = secs;
-    //      console.log(present)
-    // }, 10);
-    let timeA, timeB, timeC,secs,mins,mill;
-    timeA = timeB = timeC = Date.now();  
-  
-    setInterval(() => {
-        if (Math.floor((Date.now() -timeA)) >= 1000){
-            if (Math.floor((Date.now() - timeB)/ 1000) > 59){
-                timeA = timeB = Date.now();
-                console.log("this is the double ifs")
-            }else{
-                timeA = Date.now();
-
-                console.log("this is the single ifs")
-            }
+    console.log(Math.floor(Date.now() -timeA) , "milleseconds")
+    console.log(Math.floor((Date.now() -timeB) / 1000), "seconds")
+    console.log(Math.floor((Date.now() -timeC)/ 1000 / 60), "min")
+    mill =  String(Math.floor(Date.now() -timeA)).slice(0,2)
+    secs = Math.floor((Date.now() -timeB ) / 1000); 
+    mins = Math.floor((Date.now() -timeC)/ 1000 / 60); 
+    milElement.innerHTML = mill
+    secElement.innerHTML =  secs <= 9 ?  `0${secs}` : secs;
+    minElement.innerHTML = mins <= 9 ?  `0${mins}` : mins;
+    
+    if (Math.floor(Date.now() -timeA) >= 1000){
+        if (Math.floor((Date.now() - timeB)/ 1000) > 59){
+            timeA = timeB = Date.now();
+            console.log("this is the double ifs")
+        }else{
+            timeA = Date.now();
             
+            console.log("this is the single ifs")
         }
-        console.log(Math.floor((Date.now() -timeA)) , "milleseconds")
-        console.log(Math.floor((Date.now() -timeA ) / 1000), "seconds")
-        console.log(Math.floor((Date.now() -timeB)/ 1000 / 60), "min")
-            mill =  String(Math.floor((Date.now() -timeA))).slice(0,2)
-         secs = Math.floor((Date.now() -timeB ) / 1000); 
-         mins = Math.floor((Date.now() -timeC)/ 1000 / 60); 
-                milElement.innerHTML = mill
-             secElement.innerHTML =  secs <= 9 ?  `0${secs}` : secs;
-              minElement.innerHTML = mins <= 9 ?  `0${mins}` : mins;
-
-    }, 10);
+        
+    }
+    
 }
-
+let invokeTimer = () => setInterval(timer,10);
+let stopTimer = clearInterval(invokeTimer)
+//////////////////////////////////////////////////////////////////
 let revealIssue = (arg) => {
     console.log("Invoked the realIssue function")
     console.log(arg)
@@ -143,8 +119,8 @@ generateText.addEventListener('click', () => {
     fetch("/api/facts")
         .then(response => response.json())
         .then(data => {
-            timer();
-            pargraphContainer.textContent = data.sentence
+            invokeTimer();
+            generatedWord.textContent = data.sentence
             document.addEventListener('keydown', (event) => {
                 console.log(data, userTyped.textContent)
                 if (keys.includes(event.key) || event.key === " ") {   
@@ -152,7 +128,8 @@ generateText.addEventListener('click', () => {
             if ( userTyped.textContent.length >= data.sentence.length ){
              return   outcome(userTyped.textContent)
             }
-                    let pressedKey = document.querySelector(`#${event.key === " " ? "space" : event.key }`);
+           
+            let pressedKey = document.querySelector(`#${event.key === " " ? "space" : event.key }`);
                     pressedKey.classList.add("button_active")
                     userTyped.append(event.key)
                 } else if (event.key === "Backspace") {
@@ -161,6 +138,7 @@ generateText.addEventListener('click', () => {
                 }
                 attemptOne(userTyped.textContent, data.sentence)
             })
+           
             document.addEventListener('keyup', (event) => {
                 if (keys.includes(event.key) || event.key === " ") {
                     let pressedKey = document.querySelector(`#${event.key === " " ? "space" : event.key }`);
