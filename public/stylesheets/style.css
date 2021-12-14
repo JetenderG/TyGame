@@ -24,7 +24,9 @@ html,body{
   height: 4vh;
   width: 7vh;
   position: relative;
-  display: inline-block
+  display: inline-block;
+  font-size: 1vw;
+
 }
 .button_active{
   height: 2.2rem;
@@ -70,13 +72,16 @@ html,body{
 }
 .typing-container{
   grid-area: "Typed";
+  font-size:1em;
+  text-align: center;
+
 }
 
 .container-generate-text{
   grid-area: "Button";
 }
 
-.paragraph-data, .typing-container{
+.paragraph-data{
   font-size: 43px;
   text-align: center;
 }

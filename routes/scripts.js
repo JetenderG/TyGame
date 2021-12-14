@@ -21,7 +21,8 @@ let checkTyping = (text, word) => {
                 break;
             case false:
                 let span = document.createElement("span");
-                span.className = "incorrectGS";
+                //span.className = "incorrectGS";
+                span.classList.add("user-text","incorrectGS")
                 span.textContent = userText[i]
                 replaceChar(text, i, span)
                 console.log(span)
