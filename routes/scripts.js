@@ -6,8 +6,12 @@ const generateText = document.querySelector('.generateText');
 const typingContainer = document.querySelector(".typing-container");
 const btnGenerate = document.querySelector('.generateText');
 const userTyped = document.getElementsByClassName("user-text")[0];
-
+let typeOfEvent;
 //This is where we populate the page with letters and symbols respresenting the keys from the array from which represents the keyboard
+
+/Mobi|Android/i.test(navigator.userAgent) ? typeOfEvent = "touch" : typeOfEvent ="click";
+
+
 
 let checkTyping = (text, word) => {
     console.log("Checking Typing Alert")
@@ -127,7 +131,7 @@ keys.forEach(element => {
 });
 
 
-generateText.addEventListener('click', () => {
+generateText.addEventListener(`${typeOfEvent}`, () => {
     btnGenerate.disabled = true;
     fetch("/api/facts")
         .then(response => response.json())
