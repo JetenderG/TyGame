@@ -137,7 +137,7 @@ generateText.addEventListener(`${typeOfEvent}`, () => {
         .then(response => response.json())
         .then(data => {
             pargraphContainer.append(data.sentence)
-            document.addEventListener('keydown', (event) => {
+            document.addEventListener(`${typeOfEvent}`, (event) => {
                 console.log(event.key)
                 if (keys.includes(event.key) || event.key === " ") {
                     let pressedKey = document.querySelector(`#${event.key === " " ? "space" : event.key }`);
