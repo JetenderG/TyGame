@@ -1,7 +1,7 @@
 const keys = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "space"];
 const letterContainer = document.querySelector('.letters-container');
 const pargraphContainer = document.querySelector(".paragraph-data");
-const lettersPressed = document.querySelectorAll('key');
+const lettersPressed = document.querySelectorAll('deviceEventType');
 const generateText = document.querySelector('.generateText');
 const typingContainer = document.querySelector(".typing-container");
 const btnGenerate = document.querySelector('.generateText');
@@ -10,8 +10,11 @@ const minElement = document.getElementById("min");
 const secElement = document.getElementById("sec");
 const milElement = document.getElementById("mil");
 const generatedWord = document.querySelector(".generatedWord");
+let typeOfEvent;
+let deviceEventType;
+/Mobi|Android/i.test(navigator.userAgent) ? typeOfEvent = "touchstart" : typeOfEvent ="click";
 
-
+console.log(typeOfEvent)
 //This is where we populate the page with letters and symbols respresenting the keys from the array from which represents the keyboard
 
 let timerState = true;
@@ -27,9 +30,9 @@ let outcome = (toCheck) =>{
 let timeA, timeB, timeC,secs,mins,mill;
 timeA = timeB = timeC = Date.now();   
 let timer = () =>{
-    console.log(Math.floor(Date.now() -timeA) , "milleseconds")
-    console.log(Math.floor((Date.now() -timeB) / 1000), "seconds")
-    console.log(Math.floor((Date.now() -timeC)/ 1000 / 60), "min")
+    // console.log(Math.floor(Date.now() -timeA) , "milleseconds")
+    // console.log(Math.floor((Date.now() -timeB) / 1000), "seconds")
+    // console.log(Math.floor((Date.now() -timeC)/ 1000 / 60), "min")
     mill =  String(Math.floor(Date.now() -timeA)).slice(0,2)
     secs = Math.floor((Date.now() -timeB ) / 1000); 
     mins = Math.floor((Date.now() -timeC)/ 1000 / 60); 
@@ -112,38 +115,57 @@ keys.forEach(element => {
     letter.setAttribute("class", "key")
     letter.setAttribute("id", `${element}`)
     letter.textContent = element;
+    letter.dataset.letter = element;
     letterContainer.appendChild(letter)
 });
-generateText.addEventListener('click', () => {
+
+
+
+
+
+
+
+
+
+
+
+
+generateText.addEventListener(`${typeOfEvent}`, () => {
+    console.log("GEEEEE")
     btnGenerate.disabled = true;
     fetch("/api/facts")
-        .then(response => response.json())
-        .then(data => {
-            invokeTimer();
-            generatedWord.textContent = data.sentence
-            document.addEventListener('keydown', (event) => {
-                console.log(data, userTyped.textContent)
-                if (keys.includes(event.key) || event.key === " ") {   
+    .then(response => response.json())
+    .then(data => {
+        invokeTimer();
+        generatedWord.textContent = data.sentence
+        document.addEventListener(`${typeOfEvent === "click" ? "keydown" : "touchstart"}`, (event) => {
+          deviceEventType = typeOfEvent === "click"? deviceEventType = event.key : deviceEventType = event.target.textContent;
+            console.log(deviceEventType)
+            if (keys.includes(deviceEventType) ||   deviceEventType === " ") {   
                 console.log( userTyped.textContent.length , data.sentence.length )      
             if ( userTyped.textContent.length >= data.sentence.length ){
              return   outcome(userTyped.textContent)
             }
-           
-            let pressedKey = document.querySelector(`#${event.key === " " ? "space" : event.key }`);
+                console.log(deviceEventType)
+            let pressedKey = document.querySelector(`#${deviceEventType === " " ? "space" : deviceEventType }`);
+                         console.log("ACtivtated", pressedKey);
                     pressedKey.classList.add("button_active")
-                    userTyped.append(event.key)
-                } else if (event.key === "Backspace") {
+                    userTyped.append(deviceEventType)
+                } else if (event.deviceEventType === "Backspace") {
                     let userWritten = userTyped.textContent;
                     userTyped.textContent = userWritten.substring(0, userWritten.length - 1)
                 }
                 attemptOne(userTyped.textContent, data.sentence)
             })
            
-            document.addEventListener('keyup', (event) => {
-                if (keys.includes(event.key) || event.key === " ") {
-                    let pressedKey = document.querySelector(`#${event.key === " " ? "space" : event.key }`);
+            document.addEventListener(`${typeOfEvent === "click" ? "keyup" : "touchstart"}`, (event) => {
+                if (keys.includes(deviceEventType) || deviceEventType === " ") {
+                    console.lk
+                    let pressedKey = document.querySelector(`#${deviceEventType === " " ? "space" : deviceEventType }`);
                     pressedKey.classList.remove("button_active")
                 }
             })
         });
 })
+
+
