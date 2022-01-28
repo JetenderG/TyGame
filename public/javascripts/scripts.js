@@ -12,9 +12,11 @@ const milElement = document.getElementById("mil");
 const generatedWord = document.querySelector(".generatedWord");
 let typeOfEvent;
 let deviceEventType;
+
+//Check the device type
+//For example if its a touch device it would choose the touchstart event
 /Mobi|Android/i.test(navigator.userAgent) ? typeOfEvent = "touchstart" : typeOfEvent ="click";
 
-console.log(typeOfEvent)
 //This is where we populate the page with letters and symbols respresenting the keys from the array from which represents the keyboard
 
 let timerState = true;
@@ -26,6 +28,8 @@ let outcome = (toCheck) =>{
 }
 
 ////////////////////////////////////////////
+
+//Creates a timer in which a millsecond, seconds, and minute are retained and displayed on the screen
 
 let timeA, timeB, timeC,secs,mins,mill;
 timeA = timeB = timeC = Date.now();   
@@ -100,6 +104,7 @@ let looped = (typed, word) => {
     }
     return Promise.resolve(errorResults);
 }
+//creates a red character to indicate error
 let replaceCharacter = (arg, typed) => {
     let reConstructive = typed.split("");
     arg.forEach(char => {
@@ -110,6 +115,8 @@ let replaceCharacter = (arg, typed) => {
     });
     return Promise.resolve(reConstructive);
 }
+
+//creates a button and other attributes for each letter on the keyboard and spacebar
 keys.forEach(element => {
     let letter = document.createElement('button');
     letter.setAttribute("class", "key")
@@ -131,7 +138,7 @@ keys.forEach(element => {
 
 
 generateText.addEventListener(`${typeOfEvent}`, () => {
-    console.log("GEEEEE")
+  //  console.log("GEEEEE")
     btnGenerate.disabled = true;
     fetch("/api/facts")
     .then(response => response.json())
@@ -140,7 +147,12 @@ generateText.addEventListener(`${typeOfEvent}`, () => {
         generatedWord.textContent = data.sentence
         document.addEventListener(`${typeOfEvent === "click" ? "keydown" : "touchstart"}`, (event) => {
           deviceEventType = typeOfEvent === "click"? deviceEventType = event.key : deviceEventType = event.target.textContent;
-            console.log(deviceEventType)
+          
+          
+          
+          
+          
+          console.log(deviceEventType)
             if (keys.includes(deviceEventType) ||   deviceEventType === " ") {   
                 console.log( userTyped.textContent.length , data.sentence.length )      
             if ( userTyped.textContent.length >= data.sentence.length ){
@@ -148,7 +160,6 @@ generateText.addEventListener(`${typeOfEvent}`, () => {
             }
                 console.log(deviceEventType)
             let pressedKey = document.querySelector(`#${deviceEventType === " " ? "space" : deviceEventType }`);
-                         console.log("ACtivtated", pressedKey);
                     pressedKey.classList.add("button_active")
                     userTyped.append(deviceEventType)
                 } else if (event.deviceEventType === "Backspace") {
@@ -160,7 +171,6 @@ generateText.addEventListener(`${typeOfEvent}`, () => {
            
             document.addEventListener(`${typeOfEvent === "click" ? "keyup" : "touchstart"}`, (event) => {
                 if (keys.includes(deviceEventType) || deviceEventType === " ") {
-                    console.lk
                     let pressedKey = document.querySelector(`#${deviceEventType === " " ? "space" : deviceEventType }`);
                     pressedKey.classList.remove("button_active")
                 }
